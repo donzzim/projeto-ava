@@ -1,0 +1,80 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CartController;
+
+Route::view('/dashboard', 'site.dashboard')->name('dashboard');
+Route::get('/', function () {
+    return redirect()->route('dashboard');
+});
+
+Route::view('config', 'site.config')->name('config');
+
+// Cria todas as rotas RESTful para produtos
+Route::resource('produtos', ProdutoController::class);
+Route::get('/produto/{slug}', [ProdutoController::class, 'details'])->name('produtos.details');
+
+Route::get('/categoria/{id}', [SiteController::class, 'categoria'])->name('categorias.show');
+
+Route::resource('users', UserController::class);
+
+Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
+
+// Route::get('/produto/{id?}', [ProdutoController::class, 'show'])->name('produtos.show');
+// A interrogação após o id indica que o parâmetro é opcional
+
+// Route::get('/empresa', function () {
+//     return view('site.empresa');
+// });
+
+// Simplificação da rota acima utilizando o método view
+
+
+Route::any('/any', function () {
+    return '<strong>Permite qualquer verbo HTTP (put, post, get, delete, etc).</strong>';
+});
+
+Route::match(['put', 'post'],'/match', function () {
+    return 'Permite apenas acessos definidos.';
+});
+
+// Route::get('/produto/{id}/{cat?}', function ($id, $cat = '') {
+//     return 'O ID do produto é: ' . $id . '<br> E a categoria é: ' . $cat;
+//     A interrogação após o cat indica que o parâmetro é opcional
+// });
+
+// Route::get('/sobre', function () {
+//     return redirect('/empresa');
+// });
+
+// Simplificação da rota acima utilizando o método redirect
+
+Route::redirect('/sobre', '/empresa');
+
+Route::get('/todaynews', function () {
+    return view('news');
+})->name('noticias');
+
+Route::get('/novidades', function () {
+    return redirect()->route('noticias');
+});
+
+// Route::group([
+//         'prefix' => 'admin', // Todas as rotas começam com admin/
+//         'as' => 'admin.' // Nome das rotas começam com admin.
+//     ], function () {
+//     Route::get('dashboard', function () {
+//         return 'Área de administração - Dashboard';
+//     })->name('dashboard');
+//     Route::get('users', function () {
+//         return 'Área de administração - Usuários';
+//     })->name('users');
+//     Route::get('clients', function () {
+//         return 'Área de administração - Clientes';
+//     })->name('clients');
+// });
+
+
