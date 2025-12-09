@@ -6,9 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CartController;
 
-Route::view('/dashboard', 'site.dashboard')->name('dashboard');
+Route::view('/home', 'site.home')->name('home');
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('home');
 });
 
 Route::view('config', 'site.config')->name('config');
@@ -31,7 +31,6 @@ Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
 // });
 
 // Simplificação da rota acima utilizando o método view
-
 
 Route::any('/any', function () {
     return '<strong>Permite qualquer verbo HTTP (put, post, get, delete, etc).</strong>';

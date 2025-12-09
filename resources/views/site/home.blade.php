@@ -1,6 +1,6 @@
 @extends('site.layout')
 
-@section('title', 'Dashboard')
+@section('title', 'Home')
 
 @section('content')
 

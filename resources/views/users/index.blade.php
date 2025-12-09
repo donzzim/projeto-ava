@@ -23,7 +23,7 @@
 
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">
-                                {{ $user->firstName }} {{ $user->lastName }}
+                                {{ $user->name }}
                                 {{-- {{ Str::limit($user->firstName, 3) }} {{ $user->lastName }} --}}
                                 {{-- Str é a facade de manipulação de strings do Laravel --}}
                             </h3>

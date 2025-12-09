@@ -9,7 +9,10 @@ class CartController extends Controller
 {
     public function cartList()
     {
-        $items = Cart::items(); 
-        return dd($items);
+        $items = Cart::all(); 
+        return view ('cart.index', ['items' => $items ?? [
+            'name' => 'Carrinho Vazio',
+            'price' => '0.00'
+        ]]);
     }
 }

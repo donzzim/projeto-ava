@@ -6,9 +6,9 @@
     </div>
 
     <nav class="flex-1 p-4 space-y-2">
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
             <x-heroicon-s-home class="w-6 h-6" />
-            <span>Dashboard</span>
+            <span>Home</span>
         </a>
 
         <a href="{{ route('users.index') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
@@ -47,9 +47,13 @@
                         </a>
                     @endforeach
                 </div>
-
             </details>
         </div>
+
+        <a href="/admin" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+            <x-heroicon-o-shield-check class="w-6 h-6" />
+            <span>Administração</span>
+        </a>
     </nav>
 
     <div class="p-4 border-t border-gray-700 text-sm text-gray-400">
