@@ -24,7 +24,7 @@ class ProdutoFactory extends Factory
             'descricao' => fake()->paragraph(),
             'preco' => fake()->randomFloat(2, 10, 1000),
             'slug' => fake()->unique()->slug(),
-            'imagem' => null,
+            'imagem' => fake()->imageUrl(640, 480, 'products', true),
             'user_id' => User::pluck('id')->random() ?: User::factory(),
             // pluck = pega todos os ids da tabela users (pluck significa "pegar" ou "arrancar")
             'categoria_id' => Categoria::pluck('id')->random() ?: Categoria::factory(),

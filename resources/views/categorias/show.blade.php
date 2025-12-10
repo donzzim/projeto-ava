@@ -10,15 +10,11 @@
             @foreach ($produtos as $produto)
                 <div
                     class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden 
-            hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
 
                     {{-- Imagem do produto (opcional, coloque a coluna 'imagem' se existir) --}}
                     <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
-                        {{ $produto->imagem ?? 'Sem imagem' }}
-                        {{-- Se tiver imagem:
-        <img src="{{ asset('storage/' . $produto->imagem) }}" 
-             class="w-full h-full object-cover">
-        --}}
+                        <img src="{{ $produto->imagem }}" class="w-full h-full object-cover">
                     </div>
 
                     <div class="p-5">
@@ -46,9 +42,9 @@
                     </div>
                 </div>
             @endforeach
-            <div class="mt-6">
-                {{ $produtos->links() }}
-            </div>
+        </div>
+        <div class="mt-6">
+            {{ $produtos->links() }}
         </div>
     @else
         <p class="text-gray-600">Nenhum produto encontrado nesta categoria.</p>

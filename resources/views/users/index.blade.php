@@ -17,7 +17,7 @@
                             <x-heroicon-s-user class="w-8 h-8 text-gray-700" />
                         </div> --}}
                         <div>
-                            <img src="{{ $img }}" alt="Avatar do Pikachu"
+                            <img src="{{ $img[$loop->index] }}" alt="Avatar do Pikachu"
                                 class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center shadow-md">
                         </div>
 
@@ -44,23 +44,21 @@
 
                         <div class="flex items-center gap-3">
 
-                            {{-- Botão Editar --}}
-                            <button type="button"
+                            {{-- <button type="button"
                                 class="flex items-center gap-2 px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg 
-               hover:bg-blue-700 transition">
+                                hover:bg-blue-700 transition">
 
                                 <x-heroicon-o-pencil class="w-4 h-4" />
                                 Editar
                             </button>
 
-                            {{-- Botão Excluir --}}
                             <button type="button"
                                 class="flex items-center gap-2 px-4 py-1.5 bg-red-600 text-white text-sm rounded-lg 
-               hover:bg-red-700 transition">
+                                hover:bg-red-700 transition">
 
                                 <x-heroicon-o-trash class="w-4 h-4" />
                                 Excluir
-                            </button>
+                            </button> --}}
 
                         </div>
 

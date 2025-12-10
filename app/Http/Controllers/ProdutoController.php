@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Produto;
+use App\Models\User;
 
 class ProdutoController extends Controller
 {
@@ -22,7 +23,8 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        return 'Formulário de criação de produto';
+        $users = User::all();
+        return view('produtos.create', ['users' => $users]);
     }
 
     /**
@@ -30,8 +32,34 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Salvar novo produto';
+        // Validação opcional (recomendado)
+        $request->validate([
+            'nome' => 'required',
+            'descricao' => 'nullable',
+            'preco' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'categoria_id' => 'required|exists:categorias,id',
+        ]);
+
+        $preco = str_replace(',', '.', $request->preco);
+
+        $produto = Produto::create([
+            'nome' => $request->input('nome'),
+            'descricao' => $request->input('descricao'),
+            'preco' => $preco,
+            'slug' => \Str::slug($request->input('nome')),
+            'user_id' => $request->input('user_id'),
+            'categoria_id' => $request->input('categoria_id'),
+        ]);
+
+        if($produto){
+            flash()
+                ->option('title', 'Produto Armazenado com Sucesso!')
+                ->success('Todas as informações do produto foram salvas!');
+            return redirect()->route('produtos.index');
+        }
     }
+
 
     /**
      * Display the specified resource.

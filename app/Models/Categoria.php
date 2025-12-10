@@ -15,4 +15,11 @@ class Categoria extends Model
         'nome',
         'descricao',
     ];
+
+    public function produtos()
+    {
+        return $this->hasMany(Produto::class, 'categoria_id');
+    }
+
+    
 }

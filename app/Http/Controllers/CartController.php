@@ -10,9 +10,18 @@ class CartController extends Controller
     public function cartList()
     {
         $items = Cart::all(); 
-        return view ('cart.index', ['items' => $items ?? [
-            'name' => 'Carrinho Vazio',
-            'price' => '0.00'
-        ]]);
+        dd($items);
+    }
+
+    public function addToCart(Request $request)
+    {
+        $item = Cart::add([
+            'id' => $request->input('id'),
+            'name' => $request->input('name'),
+            'price' => $request->input('price'),
+            'quantity' => $request->input('quantity', 1),
+        ]);
+
+        return response()->json(['message' => 'Item added to cart', 'item' => $item]);
     }
 }

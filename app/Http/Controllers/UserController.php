@@ -14,8 +14,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://pokeapi.co/api/v2/pokemon/pikachu')->json();
-        $img = $response['sprites']['other']['official-artwork']['front_default'];
+        $response = Http::get('https://randomuser.me/api/', [
+            'results' => 6 // Parâmetro para solicitar 6 resultados
+        ])->json();
+
+        $img = [];
+
+        foreach ($response['results'] as $result) {
+            $img[] = $result['picture']['large'];
+        }
 
         $users = User::paginate(6);
         return view('users.index', ['users' => $users, 'img' => $img]);  

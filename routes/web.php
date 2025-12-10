@@ -22,6 +22,7 @@ Route::get('/categoria/{id}', [SiteController::class, 'categoria'])->name('categ
 Route::resource('users', UserController::class);
 
 Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
+Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
 
 // Route::get('/produto/{id?}', [ProdutoController::class, 'show'])->name('produtos.show');
 // A interrogação após o id indica que o parâmetro é opcional
