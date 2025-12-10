@@ -52,15 +52,15 @@ Route::match(['put', 'post'],'/match', function () {
 
 // Simplificação da rota acima utilizando o método redirect
 
-Route::redirect('/sobre', '/empresa');
+// Route::redirect('/sobre', '/empresa');
 
-Route::get('/todaynews', function () {
-    return view('news');
-})->name('noticias');
+// Route::get('/todaynews', function () {
+//     return view('news');
+// })->name('noticias');
 
-Route::get('/novidades', function () {
-    return redirect()->route('noticias');
-});
+// Route::get('/novidades', function () {
+//     return redirect()->route('noticias');
+// });
 
 // Route::group([
 //         'prefix' => 'admin', // Todas as rotas começam com admin/

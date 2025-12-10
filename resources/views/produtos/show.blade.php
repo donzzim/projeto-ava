@@ -46,19 +46,20 @@
                         </div>
                     </div>
 
-                    {{-- O botão será automaticamente empurrado para o final pelo justify-between --}}
-                    <div class="flex">
-                        <a href="#"
-                            class="px-4 py-3 w-full text-center bg-indigo-600 text-white text-sm font-medium rounded-lg 
-                        hover:bg-indigo-700 transition">
-                            Adicionar ao carrinho
-                        </a>
+                    <div class="flex w-full">
+                        <form action="{{ route('cart.add') }}" method="POST" class="w-full">
+                            @csrf
+                            <input type="hidden" name="produto_id" value="{{ $produto->id }}">
+
+                            <button type="submit"
+                                class="px-4 py-3 w-full text-center bg-indigo-600 text-white text-sm font-medium rounded-lg 
+                            hover:bg-indigo-700 transition">
+                                Adicionar ao carrinho
+                            </button>
+                        </form>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 @endsection

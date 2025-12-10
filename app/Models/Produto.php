@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Binafy\LaravelCart\Cartable;
 use App\Models\User;
 
-class Produto extends Model
+class Produto extends Model implements Cartable
 {
     use HasFactory;
 
@@ -30,5 +31,10 @@ class Produto extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
+
+    public function getPrice(): float
+    {
+        return $this->preco;
     }
 }

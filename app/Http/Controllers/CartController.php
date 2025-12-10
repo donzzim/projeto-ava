@@ -4,24 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Binafy\LaravelCart\Models\Cart;
+use App\Models\Produto;
+use Binafy\LaravelCart\Models\CartItem;
 
 class CartController extends Controller
 {
     public function cartList()
     {
-        $items = Cart::all(); 
-        dd($items);
+        $cart = Cart::where('user_id', 20)->first();
+
+        $produtos = $cart ? $cart->items : collect();
+
+        return view('cart.index', compact('produtos'));
     }
 
-    public function addToCart(Request $request)
+    public function addToCart(Request $request, $userId)
     {
-        $item = Cart::add([
-            'id' => $request->input('id'),
-            'name' => $request->input('name'),
-            'price' => $request->input('price'),
-            'quantity' => $request->input('quantity', 1),
-        ]);
+        $produto = Produto::findOrFail($request->produto_id);
 
-        return response()->json(['message' => 'Item added to cart', 'item' => $item]);
+        $cart = Cart::firstOrCreate(['user_id' => $userId ?? 20]);
+
+        $cart->storeItem($produto);
+
+        return redirect()
+            ->route('cart.list')
+            ->with('success', 'Produto adicionado!', 'Sucesso');
     }
 }
