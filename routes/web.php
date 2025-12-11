@@ -23,6 +23,8 @@ Route::resource('users', UserController::class);
 
 Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
 Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
+Route::delete('/cart/{product}', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/cart/finish', [CartController::class, 'finish'])->name('cart.finish');
 
 // Route::get('/produto/{id?}', [ProdutoController::class, 'show'])->name('produtos.show');
 // A interrogação após o id indica que o parâmetro é opcional
@@ -41,10 +43,10 @@ Route::match(['put', 'post'],'/match', function () {
     return 'Permite apenas acessos definidos.';
 });
 
-// Route::get('/produto/{id}/{cat?}', function ($id, $cat = '') {
-//     return 'O ID do produto é: ' . $id . '<br> E a categoria é: ' . $cat;
-//     A interrogação após o cat indica que o parâmetro é opcional
-// });
+Route::get('/produto/{id}/{cat?}', function ($id, $cat = '') {
+    return 'O ID do produto é: ' . $id . '<br> E a categoria é: ' . $cat ?? 'indefinida';
+    // A interrogação após o cat indica que o parâmetro é opcional
+});
 
 // Route::get('/sobre', function () {
 //     return redirect('/empresa');

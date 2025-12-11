@@ -16,18 +16,56 @@ class CartController extends Controller
         $produtos = $cart ? $cart->items : collect();
 
         return view('cart.index', compact('produtos'));
+        // return dd($produtos);
     }
 
-    public function addToCart(Request $request, $userId)
+    public function addToCart(Request $request)
     {
+
+        $userId = 20; // Simulando um usuário autenticado com ID 20
+
         $produto = Produto::findOrFail($request->produto_id);
 
-        $cart = Cart::firstOrCreate(['user_id' => $userId ?? 20]);
+        $cart = Cart::firstOrCreate(['user_id' => $userId]);
 
         $cart->storeItem($produto);
 
         return redirect()
             ->route('cart.list')
             ->with('success', 'Produto adicionado!', 'Sucesso');
+
     }
+
+    public function removeItem($productId)
+    {
+        $userId = 20;
+
+        $cart = Cart::query()->firstOrCreate([
+            'user_id' => $userId
+        ]);
+
+        $product = Produto::findOrFail($productId);
+
+        $cart->removeItem($product);
+
+        return redirect()
+            ->route('cart.list')
+            ->with('success', 'Item removido do carrinho!');
+    }
+
+    public function finish()
+    {
+        $userId = 20;
+
+        $cart = Cart::query()->firstOrCreate(['user_id' => $userId]);
+
+        if ($cart) {
+            $cart->emptyCart();
+        }
+
+        return redirect()
+            ->route('cart.list')
+            ->with('success', 'Compra finalizada com sucesso!');
+    }
+
 }
