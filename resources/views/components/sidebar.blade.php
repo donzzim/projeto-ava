@@ -27,6 +27,11 @@
             <span>Produtos</span>
         </a>
 
+        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+            <x-heroicon-o-shield-check class="w-6 h-6" />
+            <span>Administração</span>
+        </a>
+
         <div class="space-y-1">
             <details class="group">
 
@@ -49,11 +54,6 @@
                 </div>
             </details>
         </div>
-
-        <a href="/admin" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
-            <x-heroicon-o-shield-check class="w-6 h-6" />
-            <span>Administração</span>
-        </a>
     </nav>
 
     <div class="p-4 border-t border-gray-700 text-sm text-gray-400">

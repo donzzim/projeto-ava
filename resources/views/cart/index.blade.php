@@ -12,8 +12,7 @@
                     @foreach ($produtos as $produto)
                         <div class="flex items-center p-4 sm:p-6">
                             <div class="w-20 h-20 flex-shrink-0 mr-4">
-                                <img class="w-full h-full object-cover rounded-md" src="placeholder-produto-1.jpg"
-                                    alt="Nome do Produto">
+                                <img class="w-full h-full object-cover rounded-md" src="{{ $produto->imagem }}">
                             </div>
 
                             <div class="flex-grow">
@@ -23,7 +22,7 @@
                                 <p class="text-sm text-gray-500">{{ $produto->itemable->descricao }}</p>
                                 <div class="flex items-center mt-2">
                                     <span class="text-xl font-bold text-indigo-600">R$
-                                        {{ $produto->itemable->preco }}</span>
+                                        {{ number_format($produto->itemable->preco, 2, ',', '.') }}</span>
                                     {{-- <span class="text-sm text-gray-400 ml-2 line-through">R$ 250,00</span> --}}
                                 </div>
                             </div>
@@ -51,7 +50,7 @@
                     @endforeach
                 </div>
 
-                <div class="mt-6">
+                <div class="mt-6 flex justify-between items-center">
                     <a href="/produtos" class="text-indigo-600 hover:text-indigo-500 font-medium flex items-center">
                         <svg class="w-4 h-4 mr-1 transform rotate-180" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -61,6 +60,17 @@
                         </svg>
                         Continuar Comprando
                     </a>
+                    <form action="{{ route('cart.fresh') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="ml-6 text-red-600 hover:text-red-500 font-medium flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                </path>
+                            </svg>
+                            Esvaziar Carrinho
+                    </form>
                 </div>
 
             </div>
@@ -72,13 +82,16 @@
                     <div class="space-y-3">
                         <div class="flex justify-between text-gray-600">
                             <span>Subtotal ({{ $produtos->count() }} itens)</span>
-                            <span>R$ {{ $produtos->sum(fn($item) => $item->itemable->preco * $item->quantity) }}</span>
+                            <span>R$
+                                {{ number_format($produtos->sum(fn($item) => $item->itemable->preco * $item->quantity), 2, ',', '.') }}
+                            </span>
                         </div>
                     </div>
 
                     <div class="flex justify-between text-2xl font-bold text-gray-900 mt-4 border-t pt-4">
                         <span>Total</span>
-                        <span>R$ {{ $produtos->sum(fn($item) => $item->itemable->preco * $item->quantity) }}</span>
+                        <span>R$
+                            {{ number_format($produtos->sum(fn($item) => $item->itemable->preco * $item->quantity), 2, ',', '.') }}</span>
                     </div>
 
                     <form action="{{ route('cart.finish') }}" method="POST">

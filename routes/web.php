@@ -5,6 +5,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LoginController;
 
 Route::view('/home', 'site.home')->name('home');
 Route::get('/', function () {
@@ -21,10 +22,21 @@ Route::get('/categoria/{id}', [SiteController::class, 'categoria'])->name('categ
 
 Route::resource('users', UserController::class);
 
-Route::get('/cart', [CartController::class, 'cartList'])->name('cart.list');
-Route::post('/cart', [CartController::class, 'addToCart'])->name('cart.add');
-Route::delete('/cart/{product}', [CartController::class, 'removeItem'])->name('cart.remove');
-Route::post('/cart/finish', [CartController::class, 'finish'])->name('cart.finish');
+Route::prefix('cart')->name('cart.')->group(function () {
+
+    Route::get('/', [CartController::class, 'cartList'])->name('list');
+
+    Route::post('/', [CartController::class, 'addToCart'])->name('add');
+
+    Route::delete('/{product}', [CartController::class, 'removeItem'])->name('remove');
+
+    Route::post('/finish', [CartController::class, 'finish'])->name('finish');
+
+    Route::post('/fresh', [CartController::class, 'freshCart'])->name('fresh');
+});
+
+Route::view('/login', 'login.form')->name('login');
+Route::post('/auth', [LoginController::class, 'auth'])->name('auth');
 
 // Route::get('/produto/{id?}', [ProdutoController::class, 'show'])->name('produtos.show');
 // A interrogação após o id indica que o parâmetro é opcional

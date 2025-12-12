@@ -9,9 +9,11 @@ use Binafy\LaravelCart\Models\CartItem;
 
 class CartController extends Controller
 {
+    public int $userId = 20; // Simulando um usuário autenticado com ID 20
+
     public function cartList()
     {
-        $cart = Cart::where('user_id', 20)->first();
+        $cart = Cart::where('user_id', $this->userId)->first();
 
         $produtos = $cart ? $cart->items : collect();
 
@@ -21,27 +23,21 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-
-        $userId = 20; // Simulando um usuário autenticado com ID 20
-
         $produto = Produto::findOrFail($request->produto_id);
 
-        $cart = Cart::firstOrCreate(['user_id' => $userId]);
+        $cart = Cart::firstOrCreate(['user_id' => $this->userId]);
 
         $cart->storeItem($produto);
 
-        return redirect()
-            ->route('cart.list')
-            ->with('success', 'Produto adicionado!', 'Sucesso');
-
+        flash()->option('title', 'Sucesso!')->success('Produto adicionado ao carrinho!');
+            
+        return redirect()->route('cart.list');
     }
 
     public function removeItem($productId)
     {
-        $userId = 20;
-
         $cart = Cart::query()->firstOrCreate([
-            'user_id' => $userId
+            'user_id' => $this->userId
         ]);
 
         $product = Produto::findOrFail($productId);
@@ -55,9 +51,7 @@ class CartController extends Controller
 
     public function finish()
     {
-        $userId = 20;
-
-        $cart = Cart::query()->firstOrCreate(['user_id' => $userId]);
+        $cart = Cart::query()->firstOrCreate(['user_id' => $this->userId]);
 
         if ($cart) {
             $cart->emptyCart();
@@ -66,6 +60,19 @@ class CartController extends Controller
         return redirect()
             ->route('cart.list')
             ->with('success', 'Compra finalizada com sucesso!');
+    }
+
+    public function freshCart(Request $request)
+    {
+        $cart = Cart::query()->firstOrCreate(['user_id' => $this->userId]);
+
+        if ($cart) {
+            $cart->emptyCart();
+        }
+
+        return redirect()
+            ->route('cart.list')
+            ->with('info', 'Carrinho esvaziado!');
     }
 
 }
