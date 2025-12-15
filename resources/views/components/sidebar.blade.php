@@ -27,7 +27,8 @@
             <span>Produtos</span>
         </a>
 
-        <a href="#" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+        <a href="{{ route('admin.dashboard') }}"
+            class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
             <x-heroicon-o-shield-check class="w-6 h-6" />
             <span>Administração</span>
         </a>
@@ -57,6 +58,11 @@
     </nav>
 
     <div class="p-4 border-t border-gray-700 text-sm text-gray-400">
-        © E-Gap 2025
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+                class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">Sair</button>
+        </form>
     </div>
+
 </div>
