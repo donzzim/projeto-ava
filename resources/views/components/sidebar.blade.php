@@ -11,7 +11,13 @@
             <span>Home</span>
         </a>
 
-        <a href="{{ route('users.index') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
+            <x-heroicon-o-chart-bar class="w-6 h-6" />
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{{ route('users.index') }}"
+            class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">
             <x-heroicon-s-user class="w-6 h-6" />
             <span>Usuários</span>
         </a>
@@ -58,11 +64,17 @@
     </nav>
 
     <div class="p-4 border-t border-gray-700 text-sm text-gray-400">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit"
-                class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">Sair</button>
-        </form>
+        @auth
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit"
+                    class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">Sair</button>
+            </form>
+        @endauth
+        @guest
+            <a href="{{ route('login') }}"
+                class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition">Entrar</a>
+        @endguest
     </div>
 
 </div>

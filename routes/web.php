@@ -11,18 +11,20 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 require __DIR__ . '/auth.php';
 
+Route::view('/home', 'site.home')->name('home');
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+
+Route::view('config', 'site.config')->name('config');
+
 Route::middleware(['auth'])->group(function () {
-    Route::view('/home', 'site.home')->name('home');
-    Route::get('/', function () {
-        return redirect()->route('home');
-    });
-
-    Route::view('config', 'site.config')->name('config');
-
     // Cria todas as rotas RESTful para produtos
     Route::resource('produtos', ProdutoController::class);
     Route::get('/produto/{slug}', [ProdutoController::class, 'details'])->name('produtos.details');
 
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    
     Route::get('/categoria/{id}', [SiteController::class, 'categoria'])->name('categorias.show');
 
     Route::resource('users', UserController::class);
@@ -56,15 +58,7 @@ Route::middleware(['auth'])->group(function () {
         //     return view('site.empresa');
     // });
         
-        // Simplificação da rota acima utilizando o método view
-        
-    Route::any('/any', function () {
-        return '<strong>Permite qualquer verbo HTTP (put, post, get, delete, etc).</strong>';
-    });
-    
-    Route::match(['put', 'post'],'/match', function () {
-        return 'Permite apenas acessos definidos.';
-    });
+    // Simplificação da rota acima utilizando o método view
     
     Route::get('/produto/{id}/{cat?}', function ($id, $cat = '') {
         return 'O ID do produto é: ' . $id . '<br> E a categoria é: ' . $cat ?? 'indefinida';
@@ -101,5 +95,13 @@ Route::middleware(['auth'])->group(function () {
     //         return 'Área de administração - Clientes';
     //     })->name('clients');
     // });
+});
+
+Route::any('/any', function () {
+    return '<strong>Permite qualquer verbo HTTP (put, post, get, delete, etc).</strong>';
+});
+
+Route::match(['put', 'post'],'/match', function () {
+    return 'Permite apenas acessos definidos.';
 });
 
